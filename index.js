@@ -19,7 +19,9 @@ app.use(logger('combined', {stream: logStream}));
 // 1 - Une route static sans paramètre
 app.use(express.static(__dirname + '/public'));
 
-app.use(bodyParser.json());
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
 
 // Middleware qui intercepte toutes les routes et test le query string
 // adresse:port:/api/*?key=123
@@ -80,6 +82,12 @@ app.get('/login/:password', (req, res) => {
 // Route avec un code de status
 app.get('/error', (request,response)=>{
     response.status(403).send("Accès refusé");
+});
+
+
+app.post('/process-form', (req, res) => {
+    let data = {message: `Bonjour ${req.body.firstName} ${req.body.name}`};
+    res.json(data);
 });
 
 app.listen(3000);
