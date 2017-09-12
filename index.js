@@ -5,6 +5,11 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 
 
+const users = [
+    {id:1, name:'Joe'},
+    {id:2, name:'Jack'},
+    {id:3, name:'Tino'}
+];
 
 let logStream = fs.createWriteStream(__dirname + '/log.txt', {
     flags: 'a',
@@ -41,11 +46,20 @@ app.get('/hello', (request, response) => {
     response.send('Hello Boy');
 });
 
+// Interception de cette route : '/hello/:userId(\\d+)'
+app.param('userId', (req, res, next, userId) => {
+    let user = users.find((item) => item.id === parseInt(userId));
+    user = user || {id: null, name: 'guest'};
+
+    req.currentUser = user;
+
+    next();
+});
 // Route simple avec un paramètre et une expression régulière
 // l'ensemble de la chaine peut être en expression régulière.
 // Exemple: app.get('*',(..,..)=>{}); répond à toutes les routes
-app.get('/hello/:id(\\d+)', (req, res) => {
-    let message = `hello votre id est : ${req.params.id}`;
+app.get('/hello/:userId(\\d+)', (req, res) => {
+    let message = `hello votre id est : ${req.currentUser.name}`;
     res.send(message);
 });
 
