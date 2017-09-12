@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const logger = require('morgan');
 const fs = require('fs');
+const bodyParser = require('body-parser');
+
+
 
 let logStream = fs.createWriteStream(__dirname + '/log.txt', {
     flags: 'a',
@@ -15,6 +18,8 @@ app.use(logger('combined', {stream: logStream}));
 
 // 1 - Une route static sans paramètre
 app.use(express.static(__dirname + '/public'));
+
+app.use(bodyParser.json());
 
 // Middleware qui intercepte toutes les routes et test le query string
 // adresse:port:/api/*?key=123
