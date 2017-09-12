@@ -49,6 +49,12 @@ app.get('/hello/:id(\\d+)', (req, res) => {
     res.send(message);
 });
 
+// Intercepter le paramètre 'name' des routes : '/hello/:name' et '/api/hello/:name'
+app.param('name', function(req, res, next, name) {
+    req.params.name = name.toString().toUpperCase();
+    next();
+});
+
 // Route simple avec un paramètre
 app.get('/hello/:name', (request, response) => {
     let message = `hello ${request.params.name}`;
