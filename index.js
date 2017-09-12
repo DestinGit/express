@@ -17,15 +17,7 @@ app.use(logger('combined', {stream: logStream}));
 app.use(express.static(__dirname + '/public'));
 
 // Middleware qui intercepte toutes les routes et test le query string
-// adresse:port:/*?key=123
-// app.use((request, response, next)=>{
-//     let key = request.query.key;
-//     if(key !== "123") {
-//         response.status(403).send("Accès interdit");
-//     } else {
-//         next();
-//     }
-// });
+// adresse:port:/api/*?key=123
 app.use('/api/*', (request, response, next)=>{
     let key = request.query.key;
     if(key !== "123") {
