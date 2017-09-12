@@ -1,0 +1,17 @@
+Extension "Postman" pour tester les requetes
+
+- npm init
+- npm install express --save
+
+INSTALLATION DE NODEMON pour lancer notre serveur
+- npm install -g nodemon
+pour démarrer le serveur: nodemon index.js 
+(index.js c'est le nom de notre ficher, point d'entrée de notre application)
+
+On crée un middleware avec 'use' exemple: 
+app.use((..,.., next)=>{})
+Remarque: avant de lancer un ou plusieurs middleware, mettre d'abord les chemins statiques
+
+Outils de log pour Express
+- npm install --save morgan
+pour plus d'infos: https://github.com/expressjs/morgan
